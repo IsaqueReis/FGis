@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET create page. */
 router.get('/', function(req, res, next) {
-  res.render('create', { title: 'create' });
+  res.render('create', { title: 'Criar local' });
 });
 
 module.exports = router;
