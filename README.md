@@ -11,10 +11,12 @@ Compilação
 
         npm install
 
-2. Executar a aplicação no MacOS ou Linux 
+2. Executar a aplicação no MacOS ou Linux
+
         $ DEBUG=FGis:* npm start
 
 3. Executar a aplicação no Windows
+
         > set DEBUG=FGis:* & npm start
         
 Acesse  http://localhost:3000/ para visualizar a aplicação.
