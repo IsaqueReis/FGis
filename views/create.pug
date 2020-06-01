@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    include includes/navbar.pug
+    div.row.p-5
+        include includes/map.pug
+    div.col-sm.mx-auto
+        include includes/featureForm.pug
+    script(src='/javascripts/createMap.js')
+    script(src='/javascripts/createForm.js')

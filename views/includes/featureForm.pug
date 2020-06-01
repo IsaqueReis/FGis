@@ -1,0 +1,33 @@
+form
+    div.form-group.col-sm
+        label(for="inputName") Nome
+        input#inputName.form-control(type="text")
+    div.form-group.col-sm
+        label(for="categoryName") Categoria
+        input#categoryName.form-control(type="text")
+    div.form-group.col-sm
+        label(for="categoryName") Atributos
+        div.form-row
+            div.col 
+                input#attrKey.form-control(type="text" placeholder="Nome do atributo")
+            div.col 
+                input#attrValue.form-control(type="text" placeholder="Valor do atributo")
+            div.col 
+                button#addAttribute.btn.btn-primary(type="button") Adicionar
+    div.form-group.col-sm
+        table#attrTable.table()
+            thead 
+                tr 
+                    th(scope="col") Atributo 
+                    th(scope="col") Valor
+                    th(scope="col") 
+            tbody#featureAttrs
+    div.form-group.col-sm
+        label(for="inputGeometry") Geometria
+        select#inputGeometry.custom-select
+            option(value="None") Escolha uma geometria...
+            option(value="Point") Ponto
+            option(value="LineString") Linestring
+            option(value="Polygon") Polígono
+            option(value="Circle") Círculo
+    button.ml-3.btn.btn-primary(type="submit" disabled) Adicionar local
