@@ -26,7 +26,7 @@ Lista de Tarefas
 
 - [x] Iniciar o projeto
 - [x] Adicionar o formulário de criação de features
-- [ ] Adicionar o desfazer, refazer e limpar as opções de desenho de features
+- [x] Adicionar o desfazer, refazer e limpar as opções de desenho de features
 - [ ] Criação do banco de dados para features
 - [ ] Listagem das features
 
