@@ -8,6 +8,8 @@ const Map = ol.Map;
 
 var freeHandCheck = false;                                  //verifica se o desenho é a mão livre ou não
 
+var justOneGeometry = false;                                //se true aceita apenas uma geometria por vez
+
 var features = new ol.Collection();                         //coleção de desenhos od usuário
 
 var format = new ol.format.WKT();                           //formato de saída dos desenhos 
@@ -25,6 +27,8 @@ var undoButton = document.getElementById('undo');           //botão de desfazer
 var redoButton = document.getElementById('redo');           //botão de refazer as alterações
 
 var centerButton = document.getElementById('center');       //botão de centralizar a vizualização
+
+var lockDrawCheckbox = document.getElementById('lockDraw'); //botão para travar os múltiplos desenhos
 
 var draw;                                                   //guarda o desenho
 
@@ -150,6 +154,21 @@ freeHandCheckbox.onchange = function() {
         addInteraction();
     } 
 }
+
+//aceita apenas um desenho
+lockDrawCheckbox.onchange = function() {
+    if(justOneGeometry){
+        justOneGeometry = false;
+        undoButton.disabled = false;
+        redoButton.disabled = false;
+    } else {
+        justOneGeometry = true;
+        undoButton.disabled = true;
+        redoButton.disabled = true;
+    }
+}
+
+
 
 //mostra as cordenadas do pixel atual
 map.on('singleclick', function(event) {

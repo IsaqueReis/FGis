@@ -2,4 +2,7 @@ extends layout
 
 block content
   include includes/navbar.pug
-  p1=title
+  div.row.p-5.my-auto
+    div.col-sm 
+        include includes/map.pug
+  script(src='/javascripts/createMap.js')
