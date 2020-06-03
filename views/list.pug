@@ -3,6 +3,18 @@ extends layout
 block content
   include includes/navbar.pug
   div.row.p-5.my-auto
+    div.col-sm-4
+      each feature in features 
+        table.table
+          thead 
+            tr 
+              th Nome
+              th Wkt 
+          tbody 
+            tr 
+              td feature.name 
+              td feature.wkt
     div.col-sm 
         include includes/map.pug
-  script(src='/javascripts/createMap.js')
+  script(src='/javascripts/create_map.js')
+  script(src='/javascripts/test.js')

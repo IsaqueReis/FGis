@@ -8,7 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var createRouter = require('./routes/create');
 var listRouter = require('./routes/list');
-var recieveFeatureRouter = require('./routes/recieveFeature');
+var recieveFeatureRouter = require('./routes/recieve_feature');
 
 var app = express();
 
