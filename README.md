@@ -28,5 +28,9 @@ Lista de Tarefas
 - [x] Adicionar o formulário de criação de features
 - [x] Adicionar o desfazer, refazer e limpar as opções de desenho de features
 - [x] Criação do banco de dados para features
-- [ ] Listagem das features
+- [x] Listagem das features
+- [ ] Plotar feature completa no mapa
+- [ ] Excluir feature listada
+- [ ] Editar feature listada
+- [ ] Cadastrar wkt diretamente 
 

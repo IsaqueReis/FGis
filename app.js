@@ -1,14 +1,15 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var createError          = require('http-errors');
+var express              = require('express');
+var path                 = require('path');
+var cookieParser         = require('cookie-parser');
+var logger               = require('morgan');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var createRouter = require('./routes/create');
-var listRouter = require('./routes/list');
-var recieveFeatureRouter = require('./routes/recieve_feature');
+var indexRouter          = require('./routes/index');
+var usersRouter          = require('./routes/users');
+var createRouter         = require('./routes/create');
+var listRouter           = require('./routes/list');
+var saveFeature          = require('./routes/save_feature');
+var getFeatures          = require('./routes/get_features');
 
 var app = express();
 
@@ -27,7 +28,8 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/create', createRouter);
 app.use('/list', listRouter);
-app.use('/api/saveFeature', recieveFeatureRouter);
+app.use('/api/saveFeature', saveFeature);
+app.use('/api/getAllFeatures', getFeatures);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
