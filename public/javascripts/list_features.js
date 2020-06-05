@@ -1,3 +1,5 @@
+
+
 window.addEventListener("load", function () {
     fetch('/api/getAllFeatures').then(function(response) {
         response.json().then( function(json) {
@@ -10,6 +12,14 @@ window.addEventListener("load", function () {
                        .then(function (parsedJson) {
                             appendCard(cardId, parsedJson.name, parsedJson.category, 
                                        '', cardContainer.id);
+                            console.log(parsedJson.wkt);
+                            var feature = format.readFeature(parsedJson.wkt, {
+                                dataProjection: 'EPSG:4326',
+                                featureProjection: 'EPSG:3857'
+                            });
+
+                            console.log(feature);
+                            addFeatureToMap(feature);
                        });
             });
         });

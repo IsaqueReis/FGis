@@ -7,24 +7,41 @@ var tableRowsCount = 0;
 //adicionar atributos al ista
 var addButton = document.getElementById('addAttribute').addEventListener("click", function(){
 
-        let attrCurrentKey = document.getElementById('attrKey').value;
-        let attrCurrentValue = document.getElementById('attrValue').value;
+        let inputContainer = document.getElementById('attrInput');
+        let inputControls = document.getElementById('attrInputControls');
+        let attrsTable = document.getElementById('attrTable');
+        hideOrShowDivs(inputContainer, inputControls, attrsTable);
+});
 
-        if(attributes.findIndex(x => x.key === attrCurrentKey) >= 0)
-        {
-            alert("Atributo já adicionado!");
-            return;
-        }
-            
+var cancelButton = document.getElementById('cancelAddProperty').addEventListener("click", function(){
 
-        attributes.push({key: attrCurrentKey, value: attrCurrentValue});
+    let inputContainer = document.getElementById('attrInput');
+    let inputControls = document.getElementById('attrInputControls');
+    let attrsTable = document.getElementById('attrTable');
 
-        let attrRowId = 'attrRow'.concat(tableRowsCount);
-        console.log(attrRowId);
+    hideOrShowDivs(inputContainer, inputControls, attrsTable);
+});
 
-        appendDomNode(attrRowId, 'tr', "", [], 'featureAttrs');
-        createTableEntry(attrRowId, attrCurrentKey, attrCurrentValue);
-        tableRowsCount++;
+var addToTableButton = document.getElementById('addProperty').addEventListener("click", function(){
+   
+    let attrCurrentKey = document.getElementById('attrKey').value;
+    let attrCurrentValue = document.getElementById('attrValue').value;
+
+    if(attributes.findIndex(x => x.key === attrCurrentKey) >= 0)
+    {
+        alert("Atributo já adicionado!");
+        return;
+    }
+        
+
+    attributes.push({key: attrCurrentKey, value: attrCurrentValue});
+
+    let attrRowId = 'attrRow'.concat(tableRowsCount);
+    console.log(attrRowId);
+
+    appendDomNode(attrRowId, 'tr', "", [], 'featureAttrs');
+    createTableEntry(attrRowId, attrCurrentKey, attrCurrentValue);
+    tableRowsCount++;
 });
 
 var submitButton = document.getElementById('addFeature').addEventListener("click", function(){
@@ -46,6 +63,15 @@ var submitButton = document.getElementById('addFeature').addEventListener("click
 
     sendFeature(feature);
 });
+
+function hideOrShowDivs()
+{
+    for(let i = 0; i < arguments.length; i++)
+        if(arguments[i].hidden)
+            arguments[i].hidden = false;
+        else 
+            arguments[i].hidden = true;
+}
 
 //adiciona um nó filho a um elemento dom dado sua id, tag, innerText, classes CSS e nó pai
 function appendDomNode(domNodeId, domNodeTag, domNodeInnerText, domNodeCssClassList, parentId)

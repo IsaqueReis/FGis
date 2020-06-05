@@ -1,40 +1,29 @@
 form
     div.form-group.col-sm
-        label(for="inputName") Nome
-        input#inputName.form-control(type="text")
+        input#inputName.form-control(type="text" style="height:30px" placeholder="Nome da feature")
     div.form-group.col-sm
-        label(for="categoryName") Categoria
-        input#categoryName.form-control(type="text")
+        div.btn-group(role="group")
+            button#addPoint.btn.btn-sm.btn-primary(type="button") Ponto
+            button#addLine.btn.btn-sm.btn-primary(type="button") Linha
+            button#addPoly.btn.btn-sm.btn-primary(type="button") Polígono
     div.form-group.col-sm
-        label(for="categoryName") Atributos
         div.form-row
-            div.col 
-                input#attrKey.form-control(type="text" placeholder="Nome do atributo")
-            div.col 
-                input#attrValue.form-control(type="text" placeholder="Valor do atributo")
-            div.col 
-                button#addAttribute.btn.btn-primary(type="button") Adicionar
-    div.form-group.col-sm
-        table#attrTable.table()
+            div.col.p-1
+                button#addAttribute.btn.btn-primary.btn-sm(type="button") Adicionar propriedade
+        table#attrTable.table.table-bordered.table-hover.table-sm.my-3(hidden)
             thead 
                 tr 
                     th(scope="col") Atributo 
                     th(scope="col") Valor
                     th(scope="col") 
             tbody#featureAttrs
-    div.form-group.col-sm
-        label(for="inputGeometry") Geometria
-        select#inputGeometry.custom-select
-            option(value="None") Escolha uma geometria...
-            option(value="Point") Ponto
-            option(value="LineString") Linestring
-            option(value="Polygon") Polígono
-            option(value="Circle") Círculo
-    div.form-group.col-sm
-        div.form-check
-            input#freeHand.form-check-input(type="checkbox")
-            label.form-check-label(for="freeHand") Desenho livre 
-        div.form-check 
-            input#lockDraw.form-check-input(type="checkbox")
-            label.form-check-label(for="lockDraw") Apenas uma geometria
+        div#attrInput.form-row.my-3(hidden)
+            div.col 
+                input#attrKey.form-control(type="text" placeholder="Chave" style="height: 25px")
+            div.col 
+                input#attrValue.form-control(type="text" placeholder="Valor" style="height: 25px")
+        div#attrInputControls.form-row.justify-content-end(hidden)
+            div.col-sm.offset-sm-5.p-0
+                button#cancelAddProperty.btn.btn-sm(type="button") Cancelar
+                button#addProperty.btn.btn-sm.btn-outline-primary.ml-1(type="button") Adicionar
     button#addFeature.ml-3.btn.btn-primary(type="submit") Adicionar local

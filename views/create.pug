@@ -2,10 +2,11 @@ extends layout
 
 block content
     include includes/navbar.pug
-    div.row.p-5.my-auto
-        div.col-sm 
+    div.row
+        
+        div.col-sm.pr-0
             include includes/map.pug
-        div.col-sm
+        div.col-sm-3.pl-0.pt-2.shadow
             include includes/featureForm.pug
     script(src='/javascripts/create_map.js')
     script(src='/javascripts/create_form.js')

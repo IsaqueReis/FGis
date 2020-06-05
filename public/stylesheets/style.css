@@ -5,3 +5,20 @@ body {
 a {
   color: #00B7FF;
 }
+
+::-webkit-input-placeholder {
+  color: peachpuff;
+  font-size: 13px;
+}
+::-moz-placeholder {
+  color: peachpuff;
+  font-size: 13px;
+}
+:-ms-input-placeholder {
+  color: peachpuff;
+  font-size: 13px;
+}
+::placeholder {
+  color: peachpuff;
+  font-size: 13px;
+}

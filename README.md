@@ -29,6 +29,7 @@ Lista de Tarefas
 - [x] Adicionar o desfazer, refazer e limpar as opções de desenho de features
 - [x] Criação do banco de dados para features
 - [x] Listagem das features
+- [ ] Salvar as features em GeoJSON
 - [ ] Plotar feature completa no mapa
 - [ ] Excluir feature listada
 - [ ] Editar feature listada
