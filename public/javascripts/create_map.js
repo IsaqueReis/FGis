@@ -61,6 +61,9 @@ var map = new Map({
 var modify = new Modify({source: source});
 map.addInteraction(modify);
 
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
 
 //funções de conversão de tipo de coordenada geográfica
 function toEPSG4326(element, index, array) {
