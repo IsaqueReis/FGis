@@ -1,12 +1,14 @@
 div#map.map(style="height: 100vh; width: 100%; z-index: 0")
-div#drawTools(style = "position: absolute; left: 30px; bottom: 80px;")
-    div.btn-group(role="group")
-        button#undo.btn.btn-sm.btn-primary(type="button") Desfazer
-        button#redo.btn.btn-sm.btn-primary(type="button") Refazer
-        button#clear.btn.btn-sm.btn-primary(type="button") Limpar
-        button#center.btn.btn-sm.btn-info(type="button") Localização atual
-    div(style="background-color:white; opacity: 0.5")
+div#drawTools.shadow.rounded(style = "position: absolute; left: 20px; top: 80px;")
+    div.list-group.p-1
+        a#undo.list-group-item.list-group-item-action.text-center.p-2(href="#" style="background-color:rgba(0,60,136,.5);")
+            img(src="/assets/arrow-counterclockwise.svg" alt="" width="15" height="15" title="Bootstrap")
+        a#redo.list-group-item.list-group-item-action.text-center.p-2(href="#" style="background-color:rgba(0,60,136,.5);")
+            img(src="/assets/arrow-clockwise.svg" alt="" width="15" height="15" title="Bootstrap")
+        a#clear.list-group-item.list-group-item-action.text-center.p-2(href="#" style="background-color:rgba(0,60,136,.5);")
+            img(src="/assets/Trash.svg" alt="" width="15" height="15" title="Bootstrap")
+        a#center.list-group-item.list-group-item-action.text-center.p-2(href="#" style="background-color:rgba(0,60,136,.5);")
+            img(src="/assets/house-door.svg" alt="" width="15" height="15" title="Bootstrap")
+    div(hidden)
         small#latitude
         small#longitude.ml-3
-    
-    
