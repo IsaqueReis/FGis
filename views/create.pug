@@ -7,6 +7,12 @@ block content
         div.col-sm.pr-0
             include includes/map.pug
         div.col-sm-3.pl-0.pt-2.shadow
+            div.col-sm 
+                h5.text-center Criar local
             include includes/featureForm.pug
+            div.row.mt-5 
+                div.col 
+                    h5.text-center Locais adicionados
+                    div#localList.list-group.p-1
     script(src='/javascripts/create_map.js')
     script(src='/javascripts/create_form.js')

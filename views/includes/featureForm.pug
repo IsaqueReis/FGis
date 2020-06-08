@@ -1,15 +1,19 @@
 form
     div.form-group.col-sm
-        input#inputName.form-control(type="text" style="height:30px" placeholder="Nome da feature")
+        input#inputName.form-control(type="text" style="height:30px" placeholder="Nome do local")
+    div.form-group.col-sm 
+        h5 Tipo de local
     div.form-group.col-sm
         div.btn-group(role="group")
             button#addPoint.btn.btn-sm.btn-primary(type="button") Ponto
             button#addLine.btn.btn-sm.btn-primary(type="button") Linha
             button#addPoly.btn.btn-sm.btn-primary(type="button") Polígono
+    div.form-group.col-sm 
+        h5 Lista de atributos
     div.form-group.col-sm
         div.form-row
             div.col.p-1
-                button#addAttribute.btn.btn-primary.btn-sm(type="button") Adicionar propriedade
+                button#addAttribute.btn.btn-primary.btn-sm(type="button") Adicionar atributo
         table#attrTable.table.table-bordered.table-hover.table-sm.my-3(hidden)
             thead 
                 tr 

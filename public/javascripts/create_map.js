@@ -37,7 +37,7 @@ var lockDrawCheckbox = document.getElementById('lockDraw'); //botão para travar
 
 var mapTools = document.getElementById('drawTools');        //caixa de ferramentas do mapa
 
-var draw, snap;                                             //guarda o desenho atual, snap do desenho
+var draw, snap, featureCount;                               //guarda o desenho atual, snap do desenho
 
 var raster = new TileLayer({
     source: new OSM()
@@ -61,10 +61,6 @@ var map = new Map({
 var modify = new Modify({source: source});
 map.addInteraction(modify);
 
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip();
-});
-
 //funções de conversão de tipo de coordenada geográfica
 function toEPSG4326(element, index, array) {
     element = element.getGeometry().transform('EPSG:3857', 'EPSG:4326');
@@ -76,7 +72,7 @@ function toEPSG3857(element, index, array) {
 
 //desfaz a última alteração
 function undoDraw() {
-
+    /*
     map.removeLayer(vector);
     if(features.getArray().length >= 1){
         deletedFeatures.push(features.getArray()[features.getArray().length - 1]);
@@ -88,14 +84,16 @@ function undoDraw() {
         source: source
     });
     map.addLayer(vector);
+    */
 }
 
 //refaz a última alteração
 function redoDraw() {
-
+    /*
     if(deletedFeatures.getArray().length >= 1) {
         features.push(deletedFeatures.pop());
     }
+    */
 }
 
 //limpa todos os desenhos feitos no mapa
@@ -126,6 +124,23 @@ function centerInCurrentLocation() {
     }
 }
 
+function addFeature() 
+{
+    let name     = document.getElementById('inputName').value;
+    let localList = document.getElementById('localList');
+    let listFeatureId = name.concat(featureCount);
+
+    var elemTemplate = `
+        <a id="${listFeatureId}" class="list-group-item list-group-item-action text-left p-2" href="#"><div class="row"><div class="col-sm text-center">${name}</div></div></a>
+    `;
+    var template = document.createElement('template');
+    elemTemplate = elemTemplate.trim();
+    template.innerHTML = elemTemplate;
+
+    localList.appendChild(template.content.firstChild);    
+    featureCount++;
+}
+
 function drawPoint()
 {
     draw = new Draw({
@@ -138,6 +153,7 @@ function drawPoint()
         snap = new Snap({source: source});
         map.addInteraction(draw);
         map.addInteraction(snap);
+        addFeature();
 
     } else if(features.getArray().length >= 1) {
 
