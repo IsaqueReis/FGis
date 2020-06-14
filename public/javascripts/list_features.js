@@ -10,7 +10,7 @@ window.addEventListener("load", function () {
                 Promise.resolve(f.feature_data)
                        .then(JSON.parse)
                        .then(function (parsedJson) {
-                            appendCard(cardId, parsedJson.name, parsedJson.category, 
+                            appendCard(cardId, parsedJson.name, '', 
                                        '', cardContainer.id);
                             console.log(parsedJson.wkt);
                             var feature = format.readFeature(parsedJson.wkt, {

@@ -8,48 +8,71 @@ const Modify = ol.interaction.Modify;
 const Snap = ol.interaction.Snap;
 const View = ol.View;
 const Map = ol.Map;
+const Style = ol.style.Style;
+const Stroke = ol.style.Stroke;
+const Circle = ol.style.Circle;
+const Fill = ol.style.Fill;
+const Text = ol.style.Text;
+const Select = ol.interaction.Select;
 
-var justOneGeometry = false;                                //se true aceita apenas uma geometria por vez
+var features = new ol.Collection();                                      //coleção de desenhos od usuário
 
-var features = new ol.Collection();                         //coleção de desenhos od usuário
+var format = new ol.format.WKT();                                        //formato de saída dos desenhos 
 
-var format = new ol.format.WKT();                           //formato de saída dos desenhos 
+var centerButton = document.getElementById('center');                    //botão de centralizar a vizualização
 
-var deletedFeatures = new ol.Collection();                  //guarda os elementos da feature apagados
+var addPointButton = document.getElementById('point');                   //botão para adicionar um ponto ao mapa
 
-var typeSelect = document.getElementById('inputGeometry');  //pega a geometria do elemento
+var addLineStringButton = document.getElementById('lineString');         //botão para adicionar um ponto ao mapa
 
-var clearButton = document.getElementById('clear');         //botão que limpa o mapa 
+var addPolyButton = document.getElementById('polygon');                  //botão para adicionar um ponto ao mapa
 
-var undoButton = document.getElementById('undo');           //botão de desfazer a ultima alteração 
- 
-var redoButton = document.getElementById('redo');           //botão de refazer as alterações
+var layersButton = document.getElementById('layers');
 
-var centerButton = document.getElementById('center');       //botão de centralizar a vizualização
-
-var addPointButton = document.getElementById('point');   //botão para adicionar um ponto ao mapa
-
-var addLineStringButton = document.getElementById('lineString');   //botão para adicionar um ponto ao mapa
-
-var addPolyButton = document.getElementById('polygon');   //botão para adicionar um ponto ao mapa
-
-var lockDrawCheckbox = document.getElementById('lockDraw'); //botão para travar os múltiplos desenhos
-
-var mapTools = document.getElementById('drawTools');        //caixa de ferramentas do mapa
-
-var draw, snap, featureCount = 0;                               //guarda o desenho atual, snap do desenho
+var draw, snap, featureCount = 0, currentWkt;                           //guarda o desenho atual, snap do desenho, previne iteração de desenho
 
 var raster = new TileLayer({
     source: new OSM()
 });
 
+var fill = new Fill({
+    color: 'rgba(210, 122, 167,0.2)'
+  });
+  var stroke = new Stroke({
+    color: '#B40404',
+    width: 2
+  });
+
+var styles = [
+    new Style({
+      image: new Circle({
+        fill: fill,
+        stroke: stroke,
+        radius: 5
+      }),
+      fill: fill,
+      stroke: stroke
+    })
+];
+
 var source = new VectorSource({wrapX: false, features: features});
 
 var vector = new VectorLayer({
-    source: source
+    source: source,
+    style: styles
 });
 
+var select = new Select({
+    wrapX: false
+});
+  
+var modify = new Modify({
+    features: select.getFeatures()
+});
+
+
 var map = new Map({
+    interactions: ol.interaction.defaults().extend([select, modify]),
     layers: [raster, vector],
     target: 'map',
     view: new View({
@@ -70,44 +93,6 @@ function toEPSG3857(element, index, array) {
     element = element.getGeometry().transform('EPSG:4326', 'EPSG:3857');
 }
 
-//desfaz a última alteração
-function undoDraw() {
-    /*
-    map.removeLayer(vector);
-    if(features.getArray().length >= 1){
-        deletedFeatures.push(features.getArray()[features.getArray().length - 1]);
-        features.pop();
-    }
-        
-    source = new VectorSource({wrapX: false, features: features});
-    vector = new VectorLayer({
-        source: source
-    });
-    map.addLayer(vector);
-    */
-}
-
-//refaz a última alteração
-function redoDraw() {
-    /*
-    if(deletedFeatures.getArray().length >= 1) {
-        features.push(deletedFeatures.pop());
-    }
-    */
-}
-
-//limpa todos os desenhos feitos no mapa
-function clearMap() {
-
-    map.removeLayer(vector);
-    features.clear();
-    source = new VectorSource({wrapX: false, features: features});
-    vector = new VectorLayer({
-        source: source
-    });
-    map.addLayer(vector);
-}
-
 //centraliza a visão do mapa nas coordenadas fornecidas pelo usuário, caso
 //confirme que o navegador pegue sua localização atual
 function centerInCurrentLocation() {
@@ -124,8 +109,61 @@ function centerInCurrentLocation() {
     }
 }
 
+function createLayer(feature, id) {
+
+    //pegando as coordenadas minímas e máximas da feature
+    let minx = feature.getGeometry().getExtent()[0];
+    let miny = feature.getGeometry().getExtent()[1];
+    let maxx = feature.getGeometry().getExtent()[2];
+    let maxy = feature.getGeometry().getExtent()[3];
+
+    var source = new VectorSource({
+      features: [feature]
+    });
+  
+    var vectorLayer = new VectorLayer({
+      source: source, 
+      id: id,
+      centerx: ((minx + maxx) / 2),
+      centery: ((miny + maxy) / 2)
+    });
+  
+    map.addLayer(vectorLayer);
+}
+
+function destroyLayer(id)
+{
+    let layers = map.getLayers().getArray();
+
+    layers.forEach(l => {
+        if(l.get('id') === id)
+            map.removeLayer(l);
+    });
+}
+
+function showLayer(id)
+{
+    let layers = map.getLayers().getArray();
+
+    layers.forEach(l => {
+        if(l.get('id') === id)
+        {
+            let longitude = l.get('centerx');
+            let latitude = l.get('centery');
+
+            map.setView(new ol.View({
+                center: [longitude, latitude],
+                zoom: 4
+            }));
+        }
+    });
+}
+
 function addFeature() 
 {
+    if(features.getArray().length <= 0)
+        return;
+        
     let name     = document.getElementById('inputName').value;
     let localList = document.getElementById('localList');
     let listFeatureId = name.concat(featureCount);
@@ -162,13 +200,20 @@ function addFeature()
 
     document.getElementById(`${listFeatureId}RemoveButton`).addEventListener("click", function(){
         document.getElementById(listFeatureId).remove();
-        //attributes.splice(attributes.findIndex(x => x.key === attrCurrentKey), 1);
+        destroyLayer(listFeatureId);
     });
+
+    document.getElementById(`${listFeatureId}ShowButton`).addEventListener("click", function() {
+        showLayer(listFeatureId);
+    });
+
+    createLayer(features.pop(), listFeatureId);
     featureCount++;
 }
 
 function drawPoint()
 {
+
     if(document.getElementById('inputName').value === '')
     {
         alert("não é possível adicionar um local sem nome!");
@@ -182,12 +227,10 @@ function drawPoint()
 
     if(features.getArray().length <= 0)
     {
-        clearMap();
 
         snap = new Snap({source: source});
         map.addInteraction(draw);
         map.addInteraction(snap);
-        addFeature();
 
     } else if(features.getArray().length >= 1) {
 
@@ -211,7 +254,6 @@ function drawLineString() {
     
     if(features.getArray().length <= 0)
     {
-        clearMap();
         snap = new Snap({source: source});
         map.addInteraction(draw);
         map.addInteraction(snap);
@@ -237,7 +279,6 @@ function drawPoly(){
     
     if(features.getArray().length <= 0)
     {
-        clearMap();
         snap = new Snap({source: source});
         map.addInteraction(draw);
         map.addInteraction(snap);
@@ -250,12 +291,6 @@ function drawPoly(){
 
 
 //Listeners de eventos do mapa
-
-
-//eventos de mouse e teclado
-//undoButton.addEventListener("click", undoDraw, false);
-//redoButton.addEventListener("click", redoDraw, false);
-clearButton.addEventListener("click", clearMap, false);
 centerButton.addEventListener("click", centerInCurrentLocation, false);
 addPointButton.addEventListener("click", drawPoint, false);
 addLineStringButton.addEventListener("click", drawLineString, false);
@@ -281,5 +316,7 @@ features.addEventListener("add", function(e){
 
     features.forEach(toEPSG4326);
     console.log(format.writeFeatures(features.getArray(), { rightHanded: true }));
+    currentWkt = format.writeFeatures(features.getArray(), { rightHanded: true });
     features.forEach(toEPSG3857);
 });
+

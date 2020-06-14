@@ -45,11 +45,24 @@ var addToTableButton = document.getElementById('addProperty').addEventListener("
     tableRowsCount++;
 });
 
-var submitButton = document.getElementById('addFeature').addEventListener("click", function(){
-
-    console.log('test!');
+var addLayerButton = document.getElementById('addFeature').addEventListener("click", function(){
+    /*
+    var feature = {
+        name: document.getElementById('inputName').value,
+        attributes: attributes,
+        wkt: currentWkt
+    }
+    */
     addFeature();
+
+    //sendFeature(feature);
 });
+
+/*
+var submitButton = document.getElementById('submitForm').addEventListener("click", function() {
+    console.log('submit!');
+});
+*/
 
 function hideOrShowDivs()
 {
@@ -87,16 +100,6 @@ function createTableEntry(attrRowId, attrCurrentKey, attrCurrentValue)
         document.getElementById(attrRowId).remove();
         attributes.splice(attributes.findIndex(x => x.key === attrCurrentKey), 1);
     });
-}
-
-//pega o wkt das features desenhadas no mapa
-function getWkt() {
-
-    features.forEach(toEPSG4326);
-    let wkt = format.writeFeatures(features.getArray(), { rightHanded: true });
-    features.forEach(toEPSG3857);
-
-    return wkt;
 }
 
 //envia o json para ser salvo no banco
