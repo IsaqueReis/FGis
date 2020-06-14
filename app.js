@@ -10,6 +10,7 @@ var createRouter         = require('./routes/create');
 var listRouter           = require('./routes/list');
 var saveFeature          = require('./routes/save_feature');
 var getFeatures          = require('./routes/get_features');
+var adminPage            = require('./routes/admin');
 
 var app = express();
 
@@ -30,6 +31,7 @@ app.use('/create', createRouter);
 app.use('/list', listRouter);
 app.use('/api/saveFeature', saveFeature);
 app.use('/api/getAllFeatures', getFeatures);
+app.use('/admin', adminPage);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

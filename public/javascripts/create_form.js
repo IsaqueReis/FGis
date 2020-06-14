@@ -10,6 +10,7 @@ var addButton = document.getElementById('addAttribute').addEventListener("click"
         let inputContainer = document.getElementById('attrInput');
         let inputControls = document.getElementById('attrInputControls');
         let attrsTable = document.getElementById('attrTable');
+
         hideOrShowDivs(inputContainer, inputControls, attrsTable);
 });
 
@@ -47,21 +48,7 @@ var addToTableButton = document.getElementById('addProperty').addEventListener("
 var submitButton = document.getElementById('addFeature').addEventListener("click", function(){
 
     console.log('test!');
-
-    let name     = document.getElementById('inputName').value;
-    let category = document.getElementById('categoryName').value;
-    let type     = document.getElementById('inputGeometry').value;
-    let wkt      = getWkt();
-
-    let feature = {
-        name: name,
-        category: category,
-        attributes: attributes,
-        type: type,
-        wkt: wkt
-    };
-
-    sendFeature(feature);
+    addFeature();
 });
 
 function hideOrShowDivs()

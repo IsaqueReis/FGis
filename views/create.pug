@@ -3,16 +3,13 @@ extends layout
 block content
     include includes/navbar.pug
     div.row
-        
-        div.col-sm.pr-0
-            include includes/map.pug
-        div.col-sm-3.pl-0.pt-2.shadow
-            div.col-sm 
-                h5.text-center Criar local
+        div.col-sm-3.shadow
+            div.row 
+                div.col-sm(style="background-color: #13acf2; color: white; height: 40px")
+                    h6.text-center.mt-2 Criar Local
             include includes/featureForm.pug
-            div.row.mt-5 
-                div.col 
-                    h5.text-center Locais adicionados
-                    div#localList.list-group.p-1
+            div#localList.list-group.p-1.mt-3.ml-1.mr-1(style="overflow-y: auto; overflow-x: hidden; height: 500px;")
+        div.col-sm.pl-0
+            include includes/map.pug
     script(src='/javascripts/create_map.js')
     script(src='/javascripts/create_form.js')

@@ -27,17 +27,17 @@ var redoButton = document.getElementById('redo');           //botão de refazer 
 
 var centerButton = document.getElementById('center');       //botão de centralizar a vizualização
 
-var addPointButton = document.getElementById('addPoint');   //botão para adicionar um ponto ao mapa
+var addPointButton = document.getElementById('point');   //botão para adicionar um ponto ao mapa
 
-var addLineStringButton = document.getElementById('addLine');   //botão para adicionar um ponto ao mapa
+var addLineStringButton = document.getElementById('lineString');   //botão para adicionar um ponto ao mapa
 
-var addPolyButton = document.getElementById('addPoly');   //botão para adicionar um ponto ao mapa
+var addPolyButton = document.getElementById('polygon');   //botão para adicionar um ponto ao mapa
 
 var lockDrawCheckbox = document.getElementById('lockDraw'); //botão para travar os múltiplos desenhos
 
 var mapTools = document.getElementById('drawTools');        //caixa de ferramentas do mapa
 
-var draw, snap, featureCount;                               //guarda o desenho atual, snap do desenho
+var draw, snap, featureCount = 0;                               //guarda o desenho atual, snap do desenho
 
 var raster = new TileLayer({
     source: new OSM()
@@ -129,20 +129,52 @@ function addFeature()
     let name     = document.getElementById('inputName').value;
     let localList = document.getElementById('localList');
     let listFeatureId = name.concat(featureCount);
+    console.log(listFeatureId);
 
     var elemTemplate = `
-        <a id="${listFeatureId}" class="list-group-item list-group-item-action text-left p-2" href="#"><div class="row"><div class="col-sm text-center">${name}</div></div></a>
+        <a id="${listFeatureId}" class="list-group-item text-left p-2">
+            <div class="row">
+                <div class="col-sm-8 d-sm-flex align-items-center" style="text-decoration: none">
+                    <small style="overflow: hidden">${name}</small>
+                </div>
+                <div class="col-sm">
+                    <div class="row">
+                        <div class="col-sm p-0">
+                            <button id="${listFeatureId}RemoveButton" class="btn p-0">
+                                <img src="/assets/X.svg" alt="" width="20" height="23">
+                            </button>
+                        </div>
+                        <div class="col-sm p-0">
+                            <button id="${listFeatureId}ShowButton" class="btn p-0">
+                                <img src="/assets/Cursor.svg" alt="" width="18" height="18">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
     `;
     var template = document.createElement('template');
     elemTemplate = elemTemplate.trim();
     template.innerHTML = elemTemplate;
 
     localList.appendChild(template.content.firstChild);    
+
+    document.getElementById(`${listFeatureId}RemoveButton`).addEventListener("click", function(){
+        document.getElementById(listFeatureId).remove();
+        //attributes.splice(attributes.findIndex(x => x.key === attrCurrentKey), 1);
+    });
     featureCount++;
 }
 
 function drawPoint()
 {
+    if(document.getElementById('inputName').value === '')
+    {
+        alert("não é possível adicionar um local sem nome!");
+        return;
+    }
+        
     draw = new Draw({
         source: source,
         type: 'Point',
@@ -150,6 +182,8 @@ function drawPoint()
 
     if(features.getArray().length <= 0)
     {
+        clearMap();
+
         snap = new Snap({source: source});
         map.addInteraction(draw);
         map.addInteraction(snap);
@@ -162,8 +196,14 @@ function drawPoint()
        
 }
 
-function drawLineString()
-{
+function drawLineString() {
+
+    if(document.getElementById('inputName').value === '')
+    {
+        alert("não é possível adicionar um local sem nome!");
+        return;
+    }
+
     draw = new Draw({
         source: source,
         type: 'LineString'
@@ -171,6 +211,7 @@ function drawLineString()
     
     if(features.getArray().length <= 0)
     {
+        clearMap();
         snap = new Snap({source: source});
         map.addInteraction(draw);
         map.addInteraction(snap);
@@ -181,8 +222,14 @@ function drawLineString()
     }
 }
 
-function drawPoly()
-{
+function drawPoly(){
+
+    if(document.getElementById('inputName').value === '')
+    {
+        alert("não é possível adicionar um local sem nome!");
+        return;
+    }
+    
     draw = new Draw({
         source: source,
         type: 'Polygon',
@@ -190,6 +237,7 @@ function drawPoly()
     
     if(features.getArray().length <= 0)
     {
+        clearMap();
         snap = new Snap({source: source});
         map.addInteraction(draw);
         map.addInteraction(snap);
@@ -205,8 +253,8 @@ function drawPoly()
 
 
 //eventos de mouse e teclado
-undoButton.addEventListener("click", undoDraw, false);
-redoButton.addEventListener("click", redoDraw, false);
+//undoButton.addEventListener("click", undoDraw, false);
+//redoButton.addEventListener("click", redoDraw, false);
 clearButton.addEventListener("click", clearMap, false);
 centerButton.addEventListener("click", centerInCurrentLocation, false);
 addPointButton.addEventListener("click", drawPoint, false);
@@ -222,8 +270,8 @@ map.on('singleclick', function(event) {
     let longitudeSmall = document.getElementById('longitude');
     let latitudeSmall = document.getElementById('latitude');
 
-    longitudeSmall.innerText = 'Latitude: ' + coordinateArray[0].toPrecision(6);
-    latitudeSmall.innerText = 'Longitude: ' + coordinateArray[1].toPrecision(6);
+    console.log(longitudeSmall.innerText = 'Latitude: ' + coordinateArray[0].toPrecision(6));
+    console.log(latitudeSmall.innerText = 'Longitude: ' + coordinateArray[1].toPrecision(6));
 });
 
 //realiza o dump da coloção de geometrias do mapa

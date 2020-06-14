@@ -6,6 +6,12 @@ a {
   color: #00B7FF;
 }
 
+.theme-color
+{
+  background-color: #13acf2!important;
+  color:white!important;
+}
+
 ::-webkit-input-placeholder {
   color: peachpuff;
   font-size: 13px;
@@ -21,4 +27,25 @@ a {
 ::placeholder {
   color: peachpuff;
   font-size: 13px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }

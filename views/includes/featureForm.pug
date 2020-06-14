@@ -1,33 +1,31 @@
-form
+form.mt-3.ml-1.mr-1
     div.form-group.col-sm
         input#inputName.form-control(type="text" style="height:30px" placeholder="Nome do local")
-    div.form-group.col-sm 
-        h5 Tipo de local
+    div.form-grou.col-sm.my-3.d-sm-flex.justify-content-center
+        div.btn-group
+            button#point.btn.theme-color.btn-sm(type="button") Ponto 
+            button#lineString.btn.theme-color.btn-sm(type="button") Linha 
+            button#polygon.btn.theme-color.btn-sm(type="button") Poligono
+        button#addAttribute.btn.theme-color.btn-sm.ml-5(type="button") Atributos
+            img.ml-1(src="/assets/plus.svg" alt="" width="15" height="15")
     div.form-group.col-sm
-        div.btn-group(role="group")
-            button#addPoint.btn.btn-sm.btn-primary(type="button") Ponto
-            button#addLine.btn.btn-sm.btn-primary(type="button") Linha
-            button#addPoly.btn.btn-sm.btn-primary(type="button") Polígono
-    div.form-group.col-sm 
-        h5 Lista de atributos
-    div.form-group.col-sm
-        div.form-row
-            div.col.p-1
-                button#addAttribute.btn.btn-primary.btn-sm(type="button") Adicionar atributo
-        table#attrTable.table.table-bordered.table-hover.table-sm.my-3(hidden)
+        table#attrTable.table.table-hover.table-sm.my-3(hidden)
             thead 
                 tr 
-                    th(scope="col") Atributo 
-                    th(scope="col") Valor
-                    th(scope="col") 
+                    th(scope="col" style="font-size: 14px") Atributo 
+                    th(scope="col" style="font-size: 14px") Valor
+                    th(scope="col" style="font-size: 14px") 
             tbody#featureAttrs
         div#attrInput.form-row.my-3(hidden)
             div.col 
-                input#attrKey.form-control(type="text" placeholder="Chave" style="height: 25px")
+                select#attrKey.form-control.form-control-sm
+                    option(value="chave") Chave
             div.col 
-                input#attrValue.form-control(type="text" placeholder="Valor" style="height: 25px")
-        div#attrInputControls.form-row.justify-content-end(hidden)
-            div.col-sm.p-0
+                select#attrValue.form-control.form-control-sm
+                    option(value="valor") Valor
+        div#attrInputControls.form-row(hidden)
+            div.col-sm.d-sm-flex.justify-content-end
                 button#cancelAddProperty.btn.btn-sm(type="button") Cancelar
-                button#addProperty.btn.btn-sm.btn-outline-primary.ml-1(type="button") Adicionar
-    button#addFeature.ml-3.btn.btn-primary(type="submit") Adicionar local
+                button#addProperty.btn.theme-color.btn-sm.ml-1(type="button") Adicionar
+    div.form-grou.col-sm.d-sm-flex.justify-content-end
+        button#addFeature.ml-3.btn.theme-color(type="button") Adicionar local
