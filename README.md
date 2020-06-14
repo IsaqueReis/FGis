@@ -30,7 +30,7 @@ Lista de Tarefas
 - [x] Criação do banco de dados para features
 - [x] Listagem das features
 - [ ] Salvar as features em GeoJSON
-- [ ] Plotar feature completa no mapa
+- [x] Plotar feature completa no mapa
 - [ ] Excluir feature listada
 - [ ] Editar feature listada
 - [ ] Cadastrar wkt diretamente 
