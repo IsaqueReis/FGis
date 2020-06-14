@@ -8,6 +8,7 @@ Compilação
 ==========
 
 0. Clonar este repositório
+
         git clone <link para este repositório>
 
 1. Instalar as depêndencias 
