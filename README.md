@@ -7,6 +7,10 @@ dados geográficos.
 Compilação
 ==========
 
+0. Clonar este repositório
+
+        git clone <link para este repositório>
+
 1. Instalar as depêndencias 
 
         npm install
@@ -30,7 +34,7 @@ Lista de Tarefas
 - [x] Criação do banco de dados para features
 - [x] Listagem das features
 - [ ] Salvar as features em GeoJSON
-- [ ] Plotar feature completa no mapa
+- [x] Plotar feature completa no mapa
 - [ ] Excluir feature listada
 - [ ] Editar feature listada
 - [ ] Cadastrar wkt diretamente 
