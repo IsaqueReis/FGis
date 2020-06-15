@@ -53,16 +53,36 @@ var addLayerButton = document.getElementById('addFeature').addEventListener("cli
         wkt: currentWkt
     }
     */
-    addFeature();
+
+    addFeature(attributes);
 
     //sendFeature(feature);
 });
 
-/*
-var submitButton = document.getElementById('submitForm').addEventListener("click", function() {
-    console.log('submit!');
+var submitButton = document.getElementById('submitButton').addEventListener("click", function() {
+    let layers = map.getLayers().getArray();
+
+    layers.forEach(l => {
+        //let features = l.getFeatures();
+        if(l.get('id') !== undefined)
+        {
+            let source = l.getSource();
+            let features = source.getFeatures();
+            features.forEach(toEPSG4326);
+
+            let feature = {
+                name: document.getElementById('inputName').value,
+                attributes: l.get('attributes'),
+                wkt: format.writeFeatures(features, { rightHanded: true })
+            };
+
+            sendFeature(feature);
+
+            features.forEach(toEPSG3857);
+        }
+            
+    });
 });
-*/
 
 function hideOrShowDivs()
 {

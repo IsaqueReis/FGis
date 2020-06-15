@@ -109,7 +109,7 @@ function centerInCurrentLocation() {
     }
 }
 
-function createLayer(feature, id) {
+function createLayer(feature, attributes, id) {
 
     //pegando as coordenadas minímas e máximas da feature
     let minx = feature.getGeometry().getExtent()[0];
@@ -124,6 +124,7 @@ function createLayer(feature, id) {
     var vectorLayer = new VectorLayer({
       source: source, 
       id: id,
+      attributes: attributes,
       centerx: ((minx + maxx) / 2),
       centery: ((miny + maxy) / 2)
     });
@@ -159,7 +160,7 @@ function showLayer(id)
     });
 }
 
-function addFeature() 
+function addFeature(attributes) 
 {
     if(features.getArray().length <= 0)
         return;
@@ -207,7 +208,7 @@ function addFeature()
         showLayer(listFeatureId);
     });
 
-    createLayer(features.pop(), listFeatureId);
+    createLayer(features.pop(), attributes, listFeatureId);
     featureCount++;
 }
 
