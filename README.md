@@ -28,6 +28,7 @@ Acesse  http://localhost:3000/ para visualizar a aplicação.
 Lista de Tarefas
 ===========================================
 - [ ] Refatorar prototipo
+- [ ] Migrar Framework de Front-End para Vue.js
 - [x] Iniciar o projeto
 - [x] Adicionar o formulário de criação de features
 - [x] Adicionar o desfazer, refazer e limpar as opções de desenho de features
